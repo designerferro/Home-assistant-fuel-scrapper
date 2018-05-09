@@ -123,7 +123,8 @@ debugme () {
     #DEBUG
     # set -x
     SHOWFUELSHOPLOCATION="YES"
-    echo $FUELSHOPS > debugme.txt
+    bash --version > debugme.txt 
+    echo $FUELSHOPS >> debugme.txt
     for FUELSHOP in $FUELSHOPS;
     do
     # Read local gas and diesel prices

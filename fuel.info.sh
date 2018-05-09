@@ -25,8 +25,8 @@ cat <<EOF
   f - Get the fuel prices and publish them to your home-assistant
 
 Usage:
-Get fuel prices > $(basename $0) -f "nppostocombustivel nppostocombustivel nppostocombustivel"
-Debug script > $(basename $0) -d "nppostocombustivel nppostocombustivel nppostocombustivel"
+Get fuel prices > $(basename "$0") -f "nppostocombustivel nppostocombustivel nppostocombustivel"
+Debug script > $(basename "$0") -d "nppostocombustivel nppostocombustivel nppostocombustivel"
 
 (Enter a nppostocombustivel for each Fuel shop you want to get prices from, separeted by spaces)
 
@@ -78,9 +78,9 @@ getFuelPrices () {
     -H "Pragma: no-cache" \
     -H "Cache-Control: no-cache" --data "tipo=popup&nppostocombustivel=$FUELSHOP" > .data 2>&1
 
-    cat .data | sed 's/||/\\\n/g' | sed 's/<[^>]*>/|/g' | sed 's/\€/EUR/g' | sed 's/||/\n/g' | sed 's/\ |//g' | sed 's/|G/G/g' | sed 's/\ EUR//g'  | sed 's/\á/a/g' | sed 's/\ó/o/g' | sed 's/\ \-\ //g' > .information
+    < .data sed 's/||/\\\n/g' | sed 's/<[^>]*>/|/g' | sed 's/\€/EUR/g' | sed 's/||/\n/g' | sed 's/\ |//g' | sed 's/|G/G/g' | sed 's/\ EUR//g'  | sed 's/\á/a/g' | sed 's/\ó/o/g' | sed 's/\ \-\ //g' > .information
 
-    FUELSHOPLOCATION=$(cat .data | sed 's/.*infoTitulo\"><h1>//g' | sed 's/<\/h1>.*//g' | sed 's/<br>.*//g')
+    FUELSHOPLOCATION=$(< .data sed 's/.*infoTitulo\"><h1>//g' | sed 's/<\/h1>.*//g' | sed 's/<br>.*//g')
     #DEBUG
     #echo $FUELSHOPLOCATION 
       # Clean the html out of this to get the values for each fuel price.
@@ -89,7 +89,7 @@ getFuelPrices () {
       	'GNC (gas natural comprimido) - EUR/m3' 'GNC (gas natural comprimido) - EUR/kg' \
       	'GNL (gas natural liquefeito) - EUR/kg';
       do
-        SEDLABEL=$(echo $LABEL | sed 's/\ /\\ /g' | sed 's/\//\\\//g')
+        SEDLABEL=$(echo "$LABEL" | sed 's/\ /\\ /g' | sed 's/\//\\\//g')
         FUELPRICE=$(awk -F"|" '/'"$SEDLABEL"'/{print $2}' .information)
         sensorType=$(echo "$LABEL" | sed 's/\ /_/g' | sed 's~[^[:alnum:]|_]\+~~g')
 
@@ -112,7 +112,7 @@ getFuelPrices () {
                 curl -s -X POST -H "x-ha-access: $HAPASSWORD" \
                 -H "Content-Type: application/json" \
                 -d '{"state": "'$FUELPRICE'", "attributes": {"unit_of_measurement": "€", "icon": "mdi:gas-station", "friendly_name":"'"$FRIENDLYNAME"'"}}' \
-                $PROTOCOL://$HOST_IP_OR_NAME:$PORT_NUMBER/api/states/sensor.fuel_$SENSOR >/dev/null 2>&1
+                $PROTOCOL://$HOST_IP_OR_NAME:$PORT_NUMBER/api/states/sensor.fuel_"$SENSOR" >/dev/null 2>&1
             fi
       done
   done
@@ -124,7 +124,7 @@ debugme () {
     # set -x
     SHOWFUELSHOPLOCATION="YES"
     bash --version > debugme.txt 
-    echo $FUELSHOPS >> debugme.txt
+    echo "$FUELSHOPS" >> debugme.txt
     for FUELSHOP in $FUELSHOPS;
     do
     # Read local gas and diesel prices
@@ -145,22 +145,22 @@ debugme () {
 
     echo "==============" >> debugme.txt 
 
-    cat .data | sed 's/||/\\\n/g' | sed 's/<[^>]*>/|/g' | sed 's/\€/EUR/g' | sed 's/||/\n/g' | sed 's/\ |//g' | sed 's/|G/G/g' | sed 's/\ EUR//g'  | sed 's/\á/a/g' | sed 's/\ó/o/g' | sed 's/\ \-\ //g' > .information
+    < .data sed 's/||/\\\n/g' | sed 's/<[^>]*>/|/g' | sed 's/\€/EUR/g' | sed 's/||/\n/g' | sed 's/\ |//g' | sed 's/|G/G/g' | sed 's/\ EUR//g'  | sed 's/\á/a/g' | sed 's/\ó/o/g' | sed 's/\ \-\ //g' > .information
 
     cat .information >> debugme.txt
 
     echo "==============" >> debugme.txt 
 
-    FUELSHOPLOCATION=$(cat .data | sed 's/.*infoTitulo\"><h1>//g' | sed 's/<\/h1>.*//g' | sed 's/<br>.*//g')
+    FUELSHOPLOCATION=$(< .data sed 's/.*infoTitulo\"><h1>//g' | sed 's/<\/h1>.*//g' | sed 's/<br>.*//g')
     #DEBUG
-    echo $FUELSHOPLOCATION >> debugme.txt
+    echo "$FUELSHOPLOCATION" >> debugme.txt
       # Clean the html out of this to get the values for each fuel price.
       for LABEL in 'Gasoleo simples' 'Gasoleo\|' 'Gasoleo especial' 'Gásoleo colorido' 'Gasolina simples 95' \
         'Gasolina 95' 'Gasolina especial 95' 'Gasolina 98' 'Gasolina especial 98' 'GPL Auto' \
         'GNC (gas natural comprimido) - EUR/m3' 'GNC (gas natural comprimido) - EUR/kg' \
         'GNL (gas natural liquefeito) - EUR/kg';
       do
-        SEDLABEL=$(echo $LABEL | sed 's/\ /\\ /g' | sed 's/\//\\\//g')
+        SEDLABEL=$(echo "$LABEL" | sed 's/\ /\\ /g' | sed 's/\//\\\//g')
         FUELPRICE=$(awk -F"|" '/'"$SEDLABEL"'/{print $2}' .information)
         sensorType=$(echo "$LABEL" | sed 's/\ /_/g' | sed 's~[^[:alnum:]|_]\+~~g')
 

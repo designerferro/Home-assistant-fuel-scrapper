@@ -4,10 +4,12 @@ set -u
 set -o pipefail
 
 # Change this values acoording to instructions to match your Home-assistant
-PROTOCOL="http"
-HOST_IP_OR_NAME="localhost"
+PROTOCOL="https"
+HOST_IP_OR_NAME="yourhost"
+
+# Your https port
 PORT_NUMBER="8123"
-HAPASSWORD="SomePassword"
+HAPASSWORD="theverylongapikey"
 SHOWFUELSHOPLOCATION="YES" \
 # Set this to something else like "NO" to remove from friendly names
 
@@ -109,7 +111,7 @@ getFuelPrices () {
                 # DEBUG
                 #echo "$LABEL $FUELPRICE"
                 # Add to home-assistant
-                curl -s -X POST -H "x-ha-access: $HAPASSWORD" \
+                curl -s -k -X POST -H "Authorization: Bearer $HAPASSWORD" \
                 -H "Content-Type: application/json" \
                 -d '{"state": "'$FUELPRICE'", "attributes": {"unit_of_measurement": "€", "icon": "mdi:gas-station", "friendly_name":"'"$FRIENDLYNAME"'"}}' \
                 $PROTOCOL://$HOST_IP_OR_NAME:$PORT_NUMBER/api/states/sensor.fuel_"$SENSOR" >/dev/null 2>&1

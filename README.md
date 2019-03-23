@@ -29,13 +29,13 @@ Now, lets configure the bellow variables for your Home-assistant and fuel shop:
 
 ## Home-assistant
 
-`PROTOCOL`="http" <-- Enter either "http" or "https", depending where your Home-sistant is listening
+`PROTOCOL`="https" <-- We have to go with "https". This is due to the api allways giving a empty response if we use http.
 
 `HOST_IP_OR_NAME`="localhost" <-- Usually "localhost" is fine. If you are running is script from another computer other than the one running Home-assistant, enter ther a named address like "myserver.myhouse" or an internet protocol number (IP) like "192.168.1.20"
 
-`PORT_NUMBER`="8123" <-- This is the port number your Home-assistant is listening.
+`PORT_NUMBER`="8123" <-- This is the port number your Home-assistant is listening over SSL (HTTPS).
 
-`HAPASSOWRD`="SomePassword" <-- You shouldnt leave you Home-assistant running thout a password. Enter yours here. Its the same password you entered for i_password: at configuration.yaml
+`HAPASSOWRD`="Yourverylongapigeneratedtoken" <-- Go to your Home-assistant profile (https://yourhomeassistant/profile/). At the bottom use Long-Lived Access Tokens to create one. Use the password here.
 
 ## Shoe Fuel shop friendly names in Home-assistnat
 `SHOWFUELSHOPLOCATION`="nppostocombustivel nppostocombustivel nppostocombustivel" <-- In the first step you got this from the nppostocombustivel value. Enter each nppostocombustivel separated by a space.

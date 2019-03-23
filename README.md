@@ -31,7 +31,7 @@ Now, lets configure the bellow variables for your Home-assistant and fuel shop:
 
 `PROTOCOL`="https" <-- We have to go with "https". This is due to the api allways giving a empty response if we use http.
 
-`HOST_IP_OR_NAME`="localhost" <-- Usually "localhost" is fine. If you are running is script from another computer other than the one running Home-assistant, enter ther a named address like "myserver.myhouse" or an internet protocol number (IP) like "192.168.1.20"
+`HOST_IP_OR_NAME`="fullurl" <-- Usually "localhost" worked fine, but not anymore. Enter the named address like "myserver.myhouse" or an internet protocol number (IP) like "192.168.1.20"
 
 `PORT_NUMBER`="8123" <-- This is the port number your Home-assistant is listening over SSL (HTTPS).
 

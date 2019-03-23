@@ -51,10 +51,10 @@ First of all, lets find out the identifier for the fuel shop you want to control
 HOW-TO configure communication to your Home-assistant
 -----------------------------------------------------
 Now, lets configure the bellow variables for your Home-assistant and fuel shop 
---> PROTOCOL="http" <-- Enter either "http" or "https", depending where your Home-sistant is listening 
---> HOST_IP_OR_NAME="localhost" <-- Usually "localhost" is fine. If you are running this script from another computer other than the one running Home-assistant, enter either a named address like "myserver.myhouse" or an internet protocol number (IP) like "192.168.1.20"
+--> PROTOCOL="https" <-- Accepts only "https". 
+--> HOST_IP_OR_NAME="localhost" <-- Usually "localhost" worked fine, but not anymore. Enter the full address like "myserver.myhouse.dyndns.net".
 --> PORT_NUMBER="8123" <-- This is the port number your Home-assistant is listening.
---> HAPASSOWRD="SomePassword" <-- You shouldnt leave you Home-assistant running without a password. Enter yours here. Its the same password you entered for api_password: at configuration.yaml
+--> HAPASSOWRD="theverylongapikey" <-- Enter the new Long-Lived Access Tokens password you just got from your home HA profile.
 EOF
 
 exit 0

@@ -10,24 +10,17 @@ workflows:
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
-  sonarcloud:
-    jobs:
       build:
         docker:
-          - image: cimg/base:2020.01
+          - image: 'node:latest'
         steps:
           - checkout
-          #- run:
-          #    name: Install dependencies and build project
-          #    command: ********** CHANGE ME 2 **********
           - sonarcloud/scan
-
     orbs:
-      sonarcloud: sonarsource/sonarcloud@1.0.1
-
+      sonarcloud: sonarsource/sonarcloud@1.0.0
+    version: 2.1
     workflows:
       main:
         jobs:
           - build:
-              context: SonarCloud
+              context: sonarcloud

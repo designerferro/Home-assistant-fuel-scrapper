@@ -1,4 +1,4 @@
-# Home-assistant-fuel-scrapper
+# Home-assistant-fuel-scrapper (NOT WORKING ANYMORE)
 Fuel prices scraper for Home-assistant
 ======================================
 

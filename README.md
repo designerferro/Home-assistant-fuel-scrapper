@@ -1,4 +1,7 @@
-# Home-assistant-fuel-scrapper (NOT WORKING ANYMORE)
+# Home-assistant-fuel-scrapper 
+# check https://forum.cpha.pt/t/como-publicar-os-precos-dos-combustiveis-no-seu-home-assistant/385/247?u=designerferro
+
+# NO LONGER MAINTAINEDNo 
 Fuel prices scraper for Home-assistant
 ======================================
 
